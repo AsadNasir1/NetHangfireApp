@@ -1,0 +1,63 @@
+<div class="container">
+    <div [hidden]="submitted">
+      <h1>User Form</h1>
+      <form (ngSubmit)="onSubmit()" #userForm="ngForm">
+        <div class="form-group">
+          <label for="firstname">First Name</label>
+          <input type="text" class="form-control" id="firstname"
+                 required
+                 [(ngModel)]="model.firstName" name="firstname" #firstname="ngModel">
+                 <div [hidden]="firstname.valid || firstname.pristine" class="alert alert-danger">
+                    First Name is required
+                </div>     
+        </div>
+
+        <div class="form-group">
+            <label for="lastname">Last Name</label>
+            <input type="text" class="form-control" id="lastname"
+                   required
+                   [(ngModel)]="model.lastName" name="lastname" #lastname="ngModel">        
+                   <div [hidden]="lastname.valid || lastname.pristine" class="alert alert-danger">
+                    Last Name is required
+                </div>       
+          </div>          
+
+          <div class="form-group">
+            <label for="dateOfBirth">Date Of Birth</label>
+            <div class="input-group">
+              <input class="form-control" placeholder="yyyy-mm-dd"
+              name="NGDateOfBirth" [minDate]="minDate" [(ngModel)]="model.NGDateOfBirth" ngbDatepicker #d="ngbDatepicker">
+              <button class="btn btn-outline-secondary bi bi-calendar3" (click)="d.toggle()" type="button"></button>
+              <div class="input-group-append">
+                
+              </div>     
+            </div>       
+          </div>
+
+
+          <div class="form-group">
+            <label for="phone">Phone</label>
+            <input type="text" class="form-control" id="phone"
+                   required
+                   [(ngModel)]="model.phone" name="phone" #phone="ngModel">     
+                   <div [hidden]="phone.valid || phone.pristine" class="alert alert-danger">
+                    Phone is required
+                </div>      
+          </div>
+
+          <div class="form-group">
+            <label for="address">Address</label>
+            <input type="text" class="form-control" id="address"
+                   required
+                   [(ngModel)]="model.address" name="address" #address="ngModel">
+                   <div [hidden]="address.valid || address.pristine" class="alert alert-danger">
+                    Address is required
+                </div>           
+          </div>
+  
+        <button type="submit" class="btn btn-success" (ngSubmit)="onSubmit()" [disabled]="!userForm.form.valid">Submit</button>
+        <button type="button" class="btn btn-default" (click)="newUser()" >Reset Form</button>
+      </form>
+    </div>
+  
+  </div>
