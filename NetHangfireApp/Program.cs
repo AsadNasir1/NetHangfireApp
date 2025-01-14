@@ -4,20 +4,18 @@ using Microsoft.Extensions.Configuration;
 using NetHangfireDB;
 using System;
 using Hangfire;
-using Hangfire.SqlServer;
+using Hangfire.Storage.SQLite;
 using System.Configuration;
 using NetHangfireApp.Hub;
 
 var builder = WebApplication.CreateBuilder(args);
 
 // Add services to the container.
-
 builder.Services.AddDbContext<NetHangfireDBContext>(options =>
 {
-    var connectionString = builder.Configuration.GetConnectionString("DefaultConnection");
-    options.UseSqlServer(builder.Configuration.GetConnectionString("DefaultConnection"));
+    var connectionString = builder.Configuration.GetConnectionString("SQLiteConnection");
+    options.UseSqlite(connectionString);
 });
-
 
 builder.Services.AddScoped<IUserService, UserService>();
 
@@ -25,14 +23,13 @@ builder.Services.AddHangfire(configuration => configuration
         .SetDataCompatibilityLevel(CompatibilityLevel.Version_180)
         .UseSimpleAssemblyNameTypeSerializer()
         .UseRecommendedSerializerSettings()
-        .UseSqlServerStorage(builder.Configuration.GetConnectionString("HangfireConnection")));
+        .UseSQLiteStorage(builder.Configuration.GetConnectionString("SQLiteConnection")));
 
 builder.Services.AddHangfireServer();
 
 builder.Services.AddSignalR();
 
 builder.Services.AddControllers();
-
 
 // Learn more about configuring Swagger/OpenAPI at https://aka.ms/aspnetcore/swashbuckle
 builder.Services.AddEndpointsApiExplorer();
@@ -43,15 +40,23 @@ builder.Services.AddCors(p => p.AddPolicy("corsapp", builder =>
     builder.WithOrigins("http://localhost:4200").AllowAnyMethod().AllowAnyHeader().AllowCredentials();
 }));
 
+// Add DatabaseSeeder as a transient service
+builder.Services.AddTransient<DatabaseSeeder>();
+
 var app = builder.Build();
-
-
 
 // Configure the HTTP request pipeline.
 if (app.Environment.IsDevelopment())
 {
+    using (var scope = app.Services.CreateScope())
+    {
+        var dbContext = scope.ServiceProvider.GetRequiredService<NetHangfireDBContext>();
+        dbContext.Database.Migrate(); // Automatically apply migrations
+        var seeder = scope.ServiceProvider.GetRequiredService<DatabaseSeeder>();
+        seeder.SeedTestData();
+    }
     app.UseSwagger();
-    app.UseSwaggerUI();        
+    app.UseSwaggerUI();
 }
 
 app.UseHttpsRedirection();
@@ -63,7 +68,3 @@ app.MapHub<UsersHub>("/newUser");
 app.UseHangfireDashboard();
 
 app.Run();
-
-// reference tutorials
-// https://code-maze.com/netcore-signalr-angular-realtime-charts/
-// https://mfcallahan.blog/2020/11/05/how-to-implement-signalr-in-a-net-core-angular-web-application/

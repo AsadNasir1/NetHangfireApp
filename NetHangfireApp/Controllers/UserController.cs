@@ -49,7 +49,7 @@ namespace NetHangfireApp.Controllers
                 Phone = user.Phone,
             };
 
-            var jobId = BackgroundJob.Schedule(() => _userService.AddUser(usr), TimeSpan.FromMinutes(5));            
+            var jobId = BackgroundJob.Schedule(() => _userService.AddUser(usr), TimeSpan.FromSeconds(5));   //TimeSpan.FromMinutes(5));            
             BackgroundJob.ContinueJobWith<UsersHubHelper>(jobId, m => m.SendData(user));
             return Ok();
 

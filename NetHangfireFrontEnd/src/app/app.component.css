@@ -1,0 +1,35 @@
+body {
+    box-sizing:border-box;
+  margin:0;
+  padding:0;
+  }
+  
+  #main-navbar {
+    font: 3.15em;
+    background: #444;
+  }
+  
+  #main-navbar ul {
+    margin: 0;
+    padding: 0;
+  }
+  
+  #main-navbar li {
+    display: inline-block;
+    padding: 10px 20px;
+  }
+  
+  #main-navbar li a {
+    text-decoration: none;
+    color: #EDA51A;
+    font-size: 2.5em;
+  }
+  
+  #main-navbar li a:hover {
+   /* padding-bottom: 3px;*/
+    color: #222;
+  }
+  #main-navbar li a.active {
+    color: #FF5733; /* Highlight color for the active menu */
+    font-weight: bold; /* Optional: Make it bold */
+  }  

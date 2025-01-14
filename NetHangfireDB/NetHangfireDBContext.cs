@@ -16,6 +16,8 @@ namespace NetHangfireDB
 
         public virtual DbSet<User> Users { get; set; }
 
+        public virtual DbSet<Movie> Movies { get; set; }
+
         public NetHangfireDBContext(DbContextOptions<NetHangfireDBContext> options)
             : base(options)
         {
@@ -31,6 +33,7 @@ namespace NetHangfireDB
             base.OnModelCreating(modelBuilder);
 
             modelBuilder.Entity<User>();
+            modelBuilder.Entity<Movie>();
         }
 
 

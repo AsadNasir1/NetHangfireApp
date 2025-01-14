@@ -1,0 +1,44 @@
+<div class="container mt-5">
+    <h2 class="text-center mb-4">Movies</h2>
+    <div class="form-group mb-4">
+      <input
+        type="text"
+        class="form-control"
+        placeholder="Search for movies..."
+        [(ngModel)]="searchQuery"
+        (keyup)="searchMovies()"
+      />
+    </div>
+    <div *ngIf="movies.length > 0; else noMovies">
+      <div class="row">
+        <div *ngFor="let movie of movies" class="col-md-4 mb-4">
+          <div class="card shadow-sm">
+            <img
+              [src]="movie.poster"
+              class="card-img-top"
+              alt="{{ movie.title }}"
+              style="width:423px;height:252px"
+              *ngIf="movie.poster; else noImage"
+            />
+            <ng-template #noImage>
+              <img
+                src="https://via.placeholder.com/300x400?text=No+Image"
+                class="card-img-top"
+                alt="No Image"
+              />
+            </ng-template>
+            <div class="card-body">
+              <h5 class="card-title">{{ movie.title }}</h5>
+              <p class="card-text">Release Year: {{ movie.releaseYear }}</p>
+            </div>
+          </div>
+        </div>
+      </div>
+    </div>
+    <ng-template #noMovies>
+      <div class="text-center text-muted">
+        <p>No movies found. Please try searching for a different title.</p>
+      </div>
+    </ng-template>
+  </div>
+  

@@ -18,12 +18,14 @@ import { appEffects, appStore } from './store/store';
 import { UserService } from './user.service';
 import { BsDatepickerModule } from 'ngx-bootstrap/datepicker';
 import { NgbAlertModule, NgbDatepickerModule, NgbDateStruct } from '@ng-bootstrap/ng-bootstrap';
+import { MoviesComponent } from './movies/movies.component';
 
 @NgModule({
   declarations: [
     AppComponent,
     AllUsersComponent,
-    AddUserComponent
+    AddUserComponent,
+    MoviesComponent
   ],
   imports: [
     BrowserModule,
