@@ -1,5 +1,6 @@
 import { Component, OnInit } from '@angular/core';
 import { HttpClient } from '@angular/common/http';
+import { environment } from '../../environments/environment';
 
 @Component({
   selector: 'app-movies',
@@ -10,7 +11,7 @@ export class MoviesComponent implements OnInit {
   searchQuery: string = '';
   movies: any[] = [];
 
-  private apiUrl = 'https://localhost:7267/api/movies';
+  private apiUrl = environment.apiUrl + 'api/movies';
   private apiKey = '3f69f22b-eca3-409e-8439-64056a61cbc6';
 
   constructor(private http: HttpClient) {}

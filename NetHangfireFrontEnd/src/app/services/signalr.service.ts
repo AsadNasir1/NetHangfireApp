@@ -1,6 +1,7 @@
 import { Injectable } from '@angular/core';
 import * as signalR from "@microsoft/signalr";
 import { User } from '../models/user';
+import { environment } from '../../environments/environment';
 
 @Injectable({
   providedIn: 'root'
@@ -13,7 +14,7 @@ export class SignalrService {
   constructor()
   { 
     this.data = new User();
-    this.hubUrl = 'https://localhost:7267/newUser'; 
+    this.hubUrl = environment.apiUrl + 'newUser'; 
   }
 
   public async initiateSignalrConnection(): Promise<void> {

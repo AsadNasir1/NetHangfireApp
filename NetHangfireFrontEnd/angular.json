@@ -62,7 +62,13 @@
           "builder": "@angular-devkit/build-angular:dev-server",
           "configurations": {
             "production": {
-              "browserTarget": "NetHangfireFrontEnd:build:production"
+              "browserTarget": "NetHangfireFrontEnd:build:production",
+              "fileReplacements": [
+                {
+                  "replace": "src/environments/environment.ts",
+                  "with": "src/environments/environment.prod.ts"
+                }
+              ]
             },
             "development": {
               "browserTarget": "NetHangfireFrontEnd:build:development"
