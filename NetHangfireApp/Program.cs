@@ -46,8 +46,8 @@ builder.Services.AddTransient<DatabaseSeeder>();
 var app = builder.Build();
 
 // Configure the HTTP request pipeline.
-if (app.Environment.IsDevelopment())
-{
+//if (app.Environment.IsDevelopment())
+//{
     using (var scope = app.Services.CreateScope())
     {
         var dbContext = scope.ServiceProvider.GetRequiredService<NetHangfireDBContext>();
@@ -57,7 +57,7 @@ if (app.Environment.IsDevelopment())
     }
     app.UseSwagger();
     app.UseSwaggerUI();
-}
+//}
 
 app.UseHttpsRedirection();
 app.UseCors("corsapp");
